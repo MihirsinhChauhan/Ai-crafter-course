@@ -1,0 +1,51 @@
+graph TD
+    %% Define Styles for clarity
+    classDef dev fill:##808080,stroke:#808080
+    classDef cicd fill:#f0e68c,stroke:#808080
+    classDef customer fill:#98fb98,stroke:#808080
+    classDef public fill:#e0b0ff,stroke:#808080
+    classDef kitchen fill:#ffbb78,stroke:#808080
+    classDef storage fill:#b8860b,stroke:#808080
+
+
+    %% Column 1: Architect and Builder
+    subgraph "Architect & Construction"
+        Developer["The Architect<br/>(You writing code)"]:::dev
+        CICD["Automated Construction Crew<br/>(CI/CD Pipeline)"]:::cicd
+    end
+
+    %% Column 2: The Live Restaurant
+    subgraph "Live Restaurant on the Internet"
+        subgraph "Public Area"
+            Customer["Customer"]:::customer
+            Gateway["Restaurant Entrance & Host<br/>(API Gateway)"]:::public
+        end
+
+        subgraph "Back of House"
+            KitchenLabel["--- The Kitchens ---"]
+            style KitchenLabel fill:#fff,stroke:#333,stroke-dasharray: 2 2
+
+            Frontend["Dining Area & Menu<br/>(Frontend App)"]:::kitchen
+            Backend["Main Kitchen<br/>(Backend App)"]:::kitchen
+            Microservice["Dessert Station<br/>(Microservice)"]:::kitchen
+            AIService["Creative Chef<br/>(AI Service)"]:::kitchen
+        end
+        
+        subgraph "Foundation"
+            DB["The Pantry & Fridge<br/>(Database)"]:::storage
+        end
+    end
+
+    %% --- The Flow of Work and Interaction ---
+    Developer -- "1. Designs new recipe" --> CICD
+    CICD -- "2. Delivers update" --> Gateway
+
+    Customer -- "3. Arrives at Restaurant" --> Gateway
+    Gateway -- "4a. Views the menu" --> Frontend
+    Gateway -- "4b. Places an order" --> Backend
+    Gateway -- "4c. Orders dessert" --> Microservice
+    Gateway -- "4d. Asks for a special" --> AIService
+    
+    Backend -- "5. Fetches ingredients" --> DB
+    Microservice -- "5. Fetches ingredients" --> DB
+    Backend -- "6. Coordinates with other stations" --> Microservice
