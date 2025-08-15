@@ -40,8 +40,8 @@ const TaskListPage = () => {
                 task={task}
                 onToggleStatus={() => console.log(`Toggle status for task ${task.id}`)}
                 onEdit={() => navigate(`/edit/${task.id}`)}
-                onDelete={() => console.log(`Delete task ${task.id}`)}
-            />
+                onDelete={() => useTaskStore.getState().deleteTask(task.id)}
+              />
             );
           })}
         </div>
