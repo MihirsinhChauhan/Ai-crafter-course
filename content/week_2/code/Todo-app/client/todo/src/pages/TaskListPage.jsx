@@ -1,33 +1,26 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import TaskItem from '../components/TaskItem';
-
-const mockTasks = [
-  { id: 1, title: 'Finish project proposal', isComplete: false, categoryId: 1, priority: 'HIGH' },
-  { id: 2, title: 'Buy groceries', isComplete: true, categoryId: 2, priority: 'MEDIUM' },
-  { id: 3, title: 'Call client', isComplete: false, categoryId: 1, priority: 'LOW' },
-];
+import useTaskStore from '../store/taskStore';
 
 const TaskListPage = () => {
+  const { tasks, fetchTasks, loading, error } = useTaskStore();
   const navigate = useNavigate();
 
-  const handleToggleStatus = (id) => {
-    console.log(`Toggle status for task ${id}`);
-  };
+  useEffect(() => {
+    console.log('TaskListPage mounted, calling fetchTasks');
+    fetchTasks();
+  }, [fetchTasks]);
 
-  const handleEdit = (task) => {
-    console.log(`Edit task ${task.id}`);
-    // Navigate to /edit/:id (not implemented yet)
-  };
+  console.log('Rendering TaskListPage with tasks:', tasks, 'Loading:', loading, 'Error:', error);
 
-  const handleDelete = (id) => {
-    console.log(`Delete task ${id}`);
-  };
+  if (loading) return <p className="text-gray-500 text-center py-8">Loading tasks...</p>;
+  if (error) return <p className="text-red-500 text-center py-8">{error}</p>;
 
   return (
     <div className="max-w-2xl mx-auto p-4 min-h-screen bg-gray-50">
       <h1 className="text-2xl font-bold mb-4 text-gray-800">My Tasks</h1>
-      {mockTasks.length === 0 ? (
+      {tasks.length === 0 ? (
         <div className="text-center text-gray-500 py-8">
           <p>No tasks, create one!</p>
           <button
@@ -39,15 +32,18 @@ const TaskListPage = () => {
         </div>
       ) : (
         <div className="space-y-2">
-          {mockTasks.map((task) => (
-            <TaskItem
-              key={task.id}
-              task={task}
-              onToggleStatus={() => handleToggleStatus(task.id)}
-              onEdit={() => handleEdit(task)}
-              onDelete={() => handleDelete(task.id)}
+          {tasks.map((task) => {
+            console.log('Rendering TaskItem for task:', task);
+            return (
+              <TaskItem
+                key={task.id}
+                task={task}
+                onToggleStatus={() => console.log(`Toggle status for task ${task.id}`)}
+                onEdit={() => navigate(`/edit/${task.id}`)}
+                onDelete={() => console.log(`Delete task ${task.id}`)}
             />
-          ))}
+            );
+          })}
         </div>
       )}
       <div className="mt-6 flex space-x-4">
