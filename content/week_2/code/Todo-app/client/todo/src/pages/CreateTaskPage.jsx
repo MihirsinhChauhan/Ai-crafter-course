@@ -1,11 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import useTaskStore from '../store/taskStore';
-
-const mockCategories = [
-  { id: 1, name: 'Work' },
-  { id: 2, name: 'Personal' },
-];
 
 const CreateTaskPage = () => {
   const [title, setTitle] = useState('');
@@ -14,7 +9,11 @@ const CreateTaskPage = () => {
   const [priority, setPriority] = useState('MEDIUM');
   const [error, setError] = useState(null);
   const navigate = useNavigate();
-  const { addTask } = useTaskStore();
+  const { addTask, categories } = useTaskStore();
+
+  useEffect(() => {
+    console.log('Categories loaded for CreateTaskPage:', categories);
+  }, [categories]);
 
   const handleSubmit = async () => {
     if (!title.trim()) {
@@ -53,7 +52,7 @@ const CreateTaskPage = () => {
           className="w-full p-2 border rounded"
         >
           <option value="">Select Category</option>
-          {mockCategories.map((cat) => (
+          {categories.map((cat) => (
             <option key={cat.id} value={cat.id}>{cat.name}</option>
           ))}
         </select>
@@ -71,6 +70,12 @@ const CreateTaskPage = () => {
           className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
         >
           Create Task
+        </button>
+        <button
+          onClick={() => navigate('/categories')}
+          className="mt-2 bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-gray-500"
+        >
+          Manage Categories
         </button>
       </div>
     </div>

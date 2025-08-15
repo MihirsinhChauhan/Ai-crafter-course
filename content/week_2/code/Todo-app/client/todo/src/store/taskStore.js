@@ -2,6 +2,7 @@ import { create } from 'zustand';
 
 const useTaskStore = create((set) => ({
   tasks: [],
+  categories: [],
   loading: false,
   error: null,
   fetchTasks: async () => {
@@ -25,13 +26,13 @@ const useTaskStore = create((set) => ({
       return { tasks: updatedTasks, loading: false };
     });
   },
-  editTask: async (id, updatedTask) => {
-    console.log('Editing task with id:', id, 'Updated data:', updatedTask);
+  updateTask: async (id, updatedTask) => {
+    console.log('Updating task with id:', id, 'Data:', updatedTask);
     set((state) => {
       const updatedTasks = state.tasks.map((task) =>
         task.id === id ? { ...task, ...updatedTask } : task
       );
-      console.log('Tasks after editing:', updatedTasks);
+      console.log('Tasks after updating:', updatedTasks);
       return { tasks: updatedTasks, loading: false };
     });
   },
@@ -41,6 +42,36 @@ const useTaskStore = create((set) => ({
       const updatedTasks = state.tasks.filter((task) => task.id !== id);
       console.log('Tasks after deleting:', updatedTasks);
       return { tasks: updatedTasks, loading: false };
+    });
+  },
+  addCategory: async (category) => {
+    console.log('Adding category:', category);
+    set((state) => {
+      const newCategory = {
+        ...category,
+        id: Date.now(),
+      };
+      const updatedCategories = [...state.categories, newCategory];
+      console.log('Categories after adding:', updatedCategories);
+      return { categories: updatedCategories, loading: false };
+    });
+  },
+  updateCategory: async (id, updatedCategory) => {
+    console.log('Updating category with id:', id, 'Data:', updatedCategory);
+    set((state) => {
+      const updatedCategories = state.categories.map((cat) =>
+        cat.id === id ? { ...cat, ...updatedCategory } : cat
+      );
+      console.log('Categories after updating:', updatedCategories);
+      return { categories: updatedCategories, loading: false };
+    });
+  },
+  deleteCategory: async (id) => {
+    console.log('Deleting category with id:', id);
+    set((state) => {
+      const updatedCategories = state.categories.filter((cat) => cat.id !== id);
+      console.log('Categories after deleting:', updatedCategories);
+      return { categories: updatedCategories, loading: false };
     });
   },
 }));

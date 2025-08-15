@@ -4,7 +4,7 @@ import TaskItem from '../components/TaskItem';
 import useTaskStore from '../store/taskStore';
 
 const TaskListPage = () => {
-  const { tasks, fetchTasks, loading, error } = useTaskStore();
+  const { tasks, fetchTasks, loading, error, updateTask, deleteTask } = useTaskStore();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -40,7 +40,7 @@ const TaskListPage = () => {
                 task={task}
                 onToggleStatus={() => console.log(`Toggle status for task ${task.id}`)}
                 onEdit={() => navigate(`/edit/${task.id}`)}
-                onDelete={() => useTaskStore.getState().deleteTask(task.id)}
+                onDelete={() => deleteTask(task.id)}
               />
             );
           })}

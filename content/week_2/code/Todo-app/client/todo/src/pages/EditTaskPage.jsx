@@ -2,14 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import useTaskStore from '../store/taskStore';
 
-const mockCategories = [
-  { id: 1, name: 'Work' },
-  { id: 2, name: 'Personal' },
-];
-
 const EditTaskPage = () => {
   const { id } = useParams();
-  const { tasks, editTask } = useTaskStore();
+  const { tasks, updateTask, categories } = useTaskStore();
   const navigate = useNavigate();
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
@@ -25,7 +20,8 @@ const EditTaskPage = () => {
       setCategoryId(task.categoryId || '');
       setPriority(task.priority || 'MEDIUM');
     }
-  }, [id, tasks]);
+    console.log('Categories loaded for EditTaskPage:', categories);
+  }, [id, tasks, categories]);
 
   const handleSubmit = async () => {
     if (!title.trim()) {
@@ -34,8 +30,8 @@ const EditTaskPage = () => {
     }
     setError(null);
     const updatedTask = { title, description, categoryId, priority };
-    console.log('Editing task with id:', id, 'Updated data:', updatedTask);
-    await editTask(parseInt(id), updatedTask);
+    console.log('Updating task with id:', id, 'Data:', updatedTask);
+    await updateTask(parseInt(id), updatedTask);
     navigate('/');
   };
 
@@ -63,7 +59,7 @@ const EditTaskPage = () => {
           className="w-full p-2 border rounded"
         >
           <option value="">Select Category</option>
-          {mockCategories.map((cat) => (
+          {categories.map((cat) => (
             <option key={cat.id} value={cat.id}>{cat.name}</option>
           ))}
         </select>
@@ -81,6 +77,12 @@ const EditTaskPage = () => {
           className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
         >
           Save Changes
+        </button>
+        <button
+          onClick={() => navigate('/categories')}
+          className="mt-2 bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-gray-500"
+        >
+          Manage Categories
         </button>
       </div>
     </div>
