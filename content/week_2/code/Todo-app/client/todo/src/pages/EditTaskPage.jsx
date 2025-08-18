@@ -37,26 +37,26 @@ const EditTaskPage = () => {
 
   return (
     <div className="max-w-md mx-auto p-4 min-h-screen bg-gray-50">
-      <h2 className="text-xl font-bold mb-4 text-gray-800">Edit Task</h2>
-      {error && <p className="text-red-500 mb-2">{error}</p>}
-      <div className="space-y-4">
+      <h2 className="text-2xl font-bold mb-6 text-gray-800">Edit Task</h2>
+      {error && <p className="text-red-500 mb-4">{error}</p>}
+      <div className="bg-white rounded-lg shadow-md p-6 space-y-6">
         <input
           type="text"
           value={title}
           onChange={(e) => setTitle(e.target.value)}
           placeholder="Task Title"
-          className="w-full p-2 border rounded"
+          className="w-full p-3 border border-teal-700 rounded-lg focus:border-teal-500"
         />
         <textarea
           value={description}
           onChange={(e) => setDescription(e.target.value)}
           placeholder="Description (optional)"
-          className="w-full p-2 border rounded"
+          className="w-full p-3 border border-teal-700 rounded-lg focus:border-teal-500 h-24 resize-y"
         />
         <select
           value={categoryId}
           onChange={(e) => setCategoryId(e.target.value)}
-          className="w-full p-2 border rounded"
+          className="w-full p-3 border border-teal-700 rounded-lg focus:border-teal-500"
         >
           <option value="">Select Category</option>
           {categories.map((cat) => (
@@ -66,7 +66,7 @@ const EditTaskPage = () => {
         <select
           value={priority}
           onChange={(e) => setPriority(e.target.value)}
-          className="w-full p-2 border rounded"
+          className="w-full p-3 border border-teal-700 rounded-lg focus:border-teal-500"
         >
           <option value="HIGH">High</option>
           <option value="MEDIUM">Medium</option>
@@ -74,13 +74,13 @@ const EditTaskPage = () => {
         </select>
         <button
           onClick={handleSubmit}
-          className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
+          className="bg-teal-700 text-white px-6 py-3 rounded-lg hover:bg-teal-600 transition duration-300 w-full"
         >
           Save Changes
         </button>
         <button
           onClick={() => navigate('/categories')}
-          className="mt-2 bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-gray-500"
+          className="mt-4 bg-gray-600 text-white px-6 py-3 rounded-lg hover:bg-gray-700 transition duration-300 w-full"
         >
           Manage Categories
         </button>
