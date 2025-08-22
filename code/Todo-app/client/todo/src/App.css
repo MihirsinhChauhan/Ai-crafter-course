@@ -1,0 +1,104 @@
+#root {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 1rem;
+  text-align: center;
+  background-color: #FFF5F2;
+  min-height: 100vh;
+}
+
+h1, h2 {
+  color: #064232;
+  font-weight: 600;
+}
+
+button {
+  background-color: #568F87;
+  color: #FFF5F2;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: #F5BABB;
+}
+
+button:focus {
+  outline: 2px solid #064232;
+  outline-offset: 2px;
+}
+
+input, textarea, select {
+  width: 100%;
+  padding: 0.75rem;
+  border: 2px solid #568F87;
+  border-radius: 0.5rem;
+  background-color: #FFF5F2;
+  color: #064232;
+  font-size: 1rem;
+}
+
+input:focus, textarea:focus, select:focus {
+  border-color: #F5BABB;
+  outline: none;
+}
+
+ul {
+  list-style: none;
+  padding: 0;
+}
+
+li {
+  background-color: #FFF5F2;
+  margin-bottom: 0.5rem;
+  padding: 1rem;
+  border-radius: 0.5rem;
+  border: 1px solid #568F87;
+}
+
+@media (max-width: 767px) {
+  #root {
+    padding: 0.5rem;
+  }
+  button {
+    width: 100%;
+    margin-bottom: 0.5rem;
+  }
+  input, textarea, select {
+    font-size: 0.9rem;
+    padding: 0.5rem;
+  }
+  h1 {
+    font-size: 1.8em;
+  }
+  h2 {
+    font-size: 1.4em;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 1024px) {
+  #root {
+    padding: 1rem;
+  }
+  button {
+    padding: 0.6rem 1.2rem;
+  }
+  input, textarea, select {
+    font-size: 1rem;
+  }
+}
+
+@media (min-width: 1025px) {
+  #root {
+    padding: 2rem;
+  }
+  button {
+    padding: 0.75rem 1.5rem;
+  }
+  input, textarea, select {
+    font-size: 1rem;
+  }
+}
